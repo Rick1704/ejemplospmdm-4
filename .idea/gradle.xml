@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/ejemploasynctask" />
             <option value="$PROJECT_DIR$/ejemplohandler" />
             <option value="$PROJECT_DIR$/ejemplohandlerthread" />
+            <option value="$PROJECT_DIR$/ejemplohttpdownload" />
             <option value="$PROJECT_DIR$/ejemplothread" />
           </set>
         </option>
