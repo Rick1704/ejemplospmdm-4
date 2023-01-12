@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/ejemplohandlerthread" />
             <option value="$PROJECT_DIR$/ejemplohttpdownload" />
             <option value="$PROJECT_DIR$/ejemplosqlite" />
+            <option value="$PROJECT_DIR$/ejemplosurfaceview" />
             <option value="$PROJECT_DIR$/ejemplothread" />
             <option value="$PROJECT_DIR$/pelotas" />
           </set>
