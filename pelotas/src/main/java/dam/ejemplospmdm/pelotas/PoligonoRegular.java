@@ -6,10 +6,9 @@ import android.graphics.Path;
 public class PoligonoRegular extends Figura {
 
     Path path = new Path();
-    float giro = 0;
 
-    public PoligonoRegular(float x, float y, int lados, float radio, int color) {
-        super(x, y, color);
+    public PoligonoRegular(float x, float y, int lados, float radio, int color, float vAngular, Giro giro) {
+        super(x, y, color, vAngular, giro);
         if (lados < 3)
             throw new IllegalArgumentException("número de lados incorrecto");
         float xIni = radio;
@@ -21,15 +20,11 @@ public class PoligonoRegular extends Figura {
         path.lineTo(xIni, yIni);
     }
 
-    public void girar(float angulo) {
-        giro += angulo;
-    }
-
     @Override
     public void dibujar(Canvas canvas) {
         canvas.save();
         canvas.translate(x, y);
-        canvas.rotate(giro, 0, 0);
+        canvas.rotate(angulo, 0, 0);
         canvas.drawPath(path, paint);
         canvas.restore();
     }

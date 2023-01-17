@@ -7,9 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
+import java.util.ArrayList;
+
 public class Juego implements Runnable {
 
-    private PoligonoRegular poligono;
+    private ArrayList<Figura> figuras = new ArrayList<>();
     private Pelota pelota;
     private SurfaceHolder holder;
     private float width;
@@ -29,21 +31,33 @@ public class Juego implements Runnable {
         this.holder = holder;
         this.width = width;
         this.height = height;
-        poligono = new PoligonoRegular(width / 2, height / 2, 5, 250, Color.GREEN);
+//        figuras.add(new PoligonoRegular(width / 2, height / 2, 5, 250, Color.GREEN, 10, Figura.Giro.DCHA));
+//        figuras.add(new Rectangulo(300, 300, 200, 170, Color.YELLOW, 150, Figura.Giro.IZDA));
+        for (int i = 0; i < 50; i++) {
+            
+        }
         rect = new Rect(0, 0, (int) (width * .5f), (int) (height * .3f));
         gameLoop = new Thread(this);
         gameLoop.start();
     }
 
+    static float FPS = 60;
+    static float NPF = 1000000000F / FPS;
+
     public void run() {
         fin = false;
         long t0 = System.nanoTime(), t1, lapso;
+        float nanos = 0;
         while (!fin) {
             t1 = System.nanoTime();
             lapso = t1 - t0;
             t0 = t1;
-            siguiente(lapso);
-            pintar();
+            nanos += lapso;
+            if (nanos >= NPF) {
+                nanos -= NPF;
+                siguiente(NPF);
+                pintar();
+            }
         }
     }
 
@@ -55,9 +69,9 @@ public class Juego implements Runnable {
         return height;
     }
 
-    private void siguiente(long lapso) {
+    private void siguiente(float lapso) {
         pelota.mover(lapso);
-        poligono.girar((lapso * 10) / 1000000000f);
+        figuras.forEach(f -> f.girar(lapso));
 //        giro += (lapso * 10) / 1000000000f;
     }
 
@@ -71,7 +85,7 @@ public class Juego implements Runnable {
         paint.setStyle(Paint.Style.FILL);
         canvas.save();
 //        canvas.translate((width - rect.width()) / 2, (height - rect.height()) / 2);
-        poligono.dibujar(canvas);
+        figuras.forEach(f ->f.dibujar(canvas));
 //        canvas.drawRect(rect, paint);
         canvas.restore();
         pelota.paint(canvas);
