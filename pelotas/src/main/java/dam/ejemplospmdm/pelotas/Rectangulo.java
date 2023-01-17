@@ -19,4 +19,18 @@ public class Rectangulo extends Figura {
         canvas.drawRect(rect, paint);
         canvas.restore();
     }
+
+    public static Rectangulo rectanguloAleatorio(float xmin, float xmax, float ymin, float ymax,
+                                                 float anchomin, float anchomax, float altomin,
+                                                 float altomax, float vmin, float vmax) {
+        float x = ;
+        float y = ;
+        float ancho = ;
+        float alto = ;
+        int color = ;
+        float v = ;
+        Giro giro = ;
+        return new Rectangulo(x, y, ancho, alto, color, v, giro);
+    }
+
 }
