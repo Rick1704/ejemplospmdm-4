@@ -1,6 +1,7 @@
 package dam.ejemplospmdm.pelotas;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Path;
 
 public class PoligonoRegular extends Figura {
@@ -18,6 +19,20 @@ public class PoligonoRegular extends Figura {
         for (int i=1; i<lados; i++)
             path.lineTo(radio * (float) Math.cos(i * angulo), radio * (float) Math.sin(i * angulo));
         path.lineTo(xIni, yIni);
+    }
+
+    public static PoligonoRegular aleatorio(int minx, int maxx, int miny, int maxy, int minlados,
+                                     int maxlados, int minradio, int maxRadio, int vmin,
+                                            int vmax) {
+        return new PoligonoRegular(
+                Aleatorio.sgte(minx, maxx),
+                Aleatorio.sgte(miny, maxy),
+                (int) Aleatorio.sgte(minlados, maxlados),
+                Aleatorio.sgte(minradio, maxRadio),
+                Color.rgb((float) Math.random(), (float) Math.random(), (float) Math.random()),
+                Aleatorio.sgte(vmin, vmax),
+                Giro.aleatorio()
+        );
     }
 
     @Override

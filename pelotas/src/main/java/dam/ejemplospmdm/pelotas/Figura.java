@@ -5,19 +5,6 @@ import android.graphics.Paint;
 
 public abstract class Figura {
 
-    public enum Giro {
-        IZDA(-1), DCHA(1);
-        int sentido;
-
-        Giro(int sentido) {
-            this.sentido = sentido;
-        }
-
-        public int getSentido() {
-            return sentido;
-        }
-    }
-
     protected float x;
     protected float y;
     protected final Paint paint = new Paint();

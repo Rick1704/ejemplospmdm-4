@@ -11,32 +11,61 @@ import java.util.ArrayList;
 
 public class Juego implements Runnable {
 
-    private ArrayList<Figura> figuras = new ArrayList<>();
-    private Pelota pelota;
+    private static final int NUMFIGURAS = 25;
+
+    private final ArrayList<Figura> figuras = new ArrayList<>();
+    private final Pelota pelota;
     private SurfaceHolder holder;
     private float width;
     private float height;
-    private Paint paint;
+    private final Paint paint;
     private volatile boolean fin;
     private Thread gameLoop;
-    private Rect rect;
-    private float giro = 0;
+    private Giro giro = Giro.IZDA;
+    private float vAngular = 35;
+    private float angulo = 0;
+    private float px;
+    private float py;
 
     public Juego() {
         pelota = new Pelota(150, 150, 50, 300, (float) Math.PI / 4, Color.RED, this);
         paint = new Paint();
     }
 
+
     public void iniciar(SurfaceHolder holder, int width, int height) {
         this.holder = holder;
         this.width = width;
         this.height = height;
-//        figuras.add(new PoligonoRegular(width / 2, height / 2, 5, 250, Color.GREEN, 10, Figura.Giro.DCHA));
-//        figuras.add(new Rectangulo(300, 300, 200, 170, Color.YELLOW, 150, Figura.Giro.IZDA));
-        for (int i = 0; i < 50; i++) {
-            
+
+        px = width / 2f;
+        py = height / 2f;
+
+        int xmin = 50;
+        int xmax = width - 50;
+        int ymin = 50;
+        int ymax = height - 50;
+        int anchomin = (int) (width * 0.1f);
+        int anchomax = (int) (width * 0.5f);
+        int altomin = (int) (height * 0.1f);
+        int altomax = (int) (height * 0.5f);
+        int radiomin = width > height ? (int) (width * .1f) : (int) (height * .1f);
+        int radiomax = width > height ? (int) (width * .25f) : (int) (height * .25f);
+
+        for (int i = 0; i < NUMFIGURAS; i++) {
+            switch (Aleatorio.sgte(1, 3)) {
+                case 1:
+                    figuras.add(Rectangulo.aleatorio(xmin, xmax, ymin, ymax, anchomin, anchomax, altomin, altomax, 30, 300));
+                    break;
+                case 2:
+                    figuras.add(Elipse.aleatorio(xmin, xmax, ymin, ymax, anchomin, anchomax, altomin, altomax, 30, 300));
+                    break;
+                case 3:
+                    figuras.add(PoligonoRegular.aleatorio(xmin, xmax, ymin, ymax, 3, 10, radiomin, radiomax, 30, 70));
+                    break;
+            }
+
         }
-        rect = new Rect(0, 0, (int) (width * .5f), (int) (height * .3f));
         gameLoop = new Thread(this);
         gameLoop.start();
     }
@@ -70,6 +99,7 @@ public class Juego implements Runnable {
     }
 
     private void siguiente(float lapso) {
+        angulo += ((lapso * vAngular) / 1000000000f) * giro.getSentido();
         pelota.mover(lapso);
         figuras.forEach(f -> f.girar(lapso));
 //        giro += (lapso * 10) / 1000000000f;
@@ -80,13 +110,11 @@ public class Juego implements Runnable {
 
         paint.setAntiAlias(true);
         canvas.drawColor(Color.BLACK);
-
+        canvas.save();
+        canvas.rotate(angulo, px, py);
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
-        canvas.save();
-//        canvas.translate((width - rect.width()) / 2, (height - rect.height()) / 2);
-        figuras.forEach(f ->f.dibujar(canvas));
-//        canvas.drawRect(rect, paint);
+        figuras.forEach(f -> f.dibujar(canvas));
         canvas.restore();
         pelota.paint(canvas);
     }
