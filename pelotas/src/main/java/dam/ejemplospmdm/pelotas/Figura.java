@@ -5,9 +5,9 @@ import android.graphics.Paint;
 
 public abstract class Figura {
 
+    protected final Paint paint = new Paint();
     protected float x;
     protected float y;
-    protected final Paint paint = new Paint();
     protected float angulo = 0;
     private float vAngular;
     private Giro giro;

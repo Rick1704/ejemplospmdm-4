@@ -8,11 +8,11 @@ public enum Giro {
         this.sentido = sentido;
     }
 
-    public int getSentido() {
-        return sentido;
-    }
-
     public static Giro aleatorio() {
         return Math.random() < .5 ? Giro.IZDA : Giro.DCHA;
+    }
+
+    public int getSentido() {
+        return sentido;
     }
 }

@@ -1,13 +1,13 @@
 package dam.ejemplospmdm.pelotas;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -18,19 +18,14 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         super.onCreate(savedInstanceState);
 
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        if(currentApiVersion >= Build.VERSION_CODES.KITKAT) {
+        final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        if (currentApiVersion >= Build.VERSION_CODES.KITKAT) {
             getWindow().getDecorView().setSystemUiVisibility(flags);
             final View decorView = getWindow().getDecorView();
             decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
                 @Override
                 public void onSystemUiVisibilityChange(int visibility) {
-                    if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
+                    if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
                         decorView.setSystemUiVisibility(flags);
                 }
             });
@@ -40,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         surface.getHolder().addCallback(this);
         setContentView(surface);
         juego = new Juego();
+        surface.setOnTouchListener(juego);
     }
 
     @Override
