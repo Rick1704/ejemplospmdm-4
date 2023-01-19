@@ -150,7 +150,7 @@ public class Juego implements Runnable, View.OnTouchListener {
                 float y2 = motionEvent.getY();
                 if (Math.abs(x1 - x2) > 20) {
                     float m = Math.abs((y2 - y1) / (x2 - x1));
-                    if (m < 0.2f) {
+                    if (m < 0.3f) {
                         giro = x1 > x2 ? Giro.IZDA : Giro.DCHA;
                     }
                 }
