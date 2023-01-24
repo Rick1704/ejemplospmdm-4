@@ -13,13 +13,13 @@ import java.util.ArrayList;
 
 public class Juego implements Runnable, View.OnTouchListener {
 
-    private Typeface typeface;
     private static final int NUMFIGURAS = 25;
     static float FPS = 60;
     static float NPF = 1000000000F / FPS;
     private final ArrayList<Figura> figuras = new ArrayList<>();
     private final Pelota pelota;
     private final Paint paint;
+    private Typeface typeface;
     private SurfaceHolder holder;
     private float width;
     private float height;
@@ -37,6 +37,7 @@ public class Juego implements Runnable, View.OnTouchListener {
         this.typeface = typeface;
         pelota = new Pelota(150, 150, 50, 300, (float) Math.PI / 4, Color.RED, this);
         paint = new Paint();
+        paint.setTypeface(typeface);
     }
 
     public void iniciar(SurfaceHolder holder, int width, int height) {
@@ -120,6 +121,12 @@ public class Juego implements Runnable, View.OnTouchListener {
         figuras.forEach(f -> f.dibujar(canvas));
         canvas.restore();
         pelota.paint(canvas);
+        paint.setColor(Color.GREEN);
+        paint.setTextSize(250);
+        canvas.drawText("PRUEBA", 150, 300, paint);
+        paint.setColor(Color.WHITE);
+        paint.setStrokeWidth(10);
+        canvas.drawLine(0,300,width,300,paint);
     }
 
     private void pintar() {
