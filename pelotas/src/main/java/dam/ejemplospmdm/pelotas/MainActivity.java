@@ -1,5 +1,6 @@
 package dam.ejemplospmdm.pelotas;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         SurfaceView surface = new SurfaceView(this);
         surface.getHolder().addCallback(this);
         setContentView(surface);
-        juego = new Juego();
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "orange.ttf");
+        juego = new Juego(typeface);
         surface.setOnTouchListener(juego);
     }
 

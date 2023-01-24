@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Juego implements Runnable, View.OnTouchListener {
 
-    private Typeface typeface = Typeface.createFromAsset();
+    private Typeface typeface;
     private static final int NUMFIGURAS = 25;
     static float FPS = 60;
     static float NPF = 1000000000F / FPS;
@@ -33,7 +33,8 @@ public class Juego implements Runnable, View.OnTouchListener {
     private float x1;
     private float y1;
 
-    public Juego() {
+    public Juego(Typeface typeface) {
+        this.typeface = typeface;
         pelota = new Pelota(150, 150, 50, 300, (float) Math.PI / 4, Color.RED, this);
         paint = new Paint();
     }
