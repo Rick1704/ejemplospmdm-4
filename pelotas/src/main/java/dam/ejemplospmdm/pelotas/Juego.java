@@ -3,6 +3,7 @@ package dam.ejemplospmdm.pelotas;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 public class Juego implements Runnable, View.OnTouchListener {
 
+    private Typeface typeface = Typeface.createFromAsset();
     private static final int NUMFIGURAS = 25;
     static float FPS = 60;
     static float NPF = 1000000000F / FPS;
