@@ -3,7 +3,9 @@ package dam.ejemplospmdm.pelotas;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -32,12 +34,21 @@ public class Juego implements Runnable, View.OnTouchListener {
     private float py;
     private float x1;
     private float y1;
+    private String texto = "dsaas";
+    private float escala;
+    //ancho texto * escala = ancho pantalla
 
-    public Juego(Typeface typeface) {
+    public Juego(DisplayMetrics metrics, Typeface typeface) {
         this.typeface = typeface;
         pelota = new Pelota(150, 150, 50, 300, (float) Math.PI / 4, Color.RED, this);
         paint = new Paint();
         paint.setTypeface(typeface);
+        Rect rect = new Rect();
+        paint.getTextBounds(texto, 0, texto.length(), rect);
+        int altoTexto = rect.height();
+        int anchoTexto = rect.width();
+        int anchoPantalla = metrics.widthPixels;
+        escala = anchoPantalla / anchoTexto;
     }
 
     public void iniciar(SurfaceHolder holder, int width, int height) {
@@ -122,11 +133,19 @@ public class Juego implements Runnable, View.OnTouchListener {
         canvas.restore();
         pelota.paint(canvas);
         paint.setColor(Color.GREEN);
-        paint.setTextSize(250);
-        canvas.drawText("PRUEBA", 150, 300, paint);
+        canvas.save();
+        canvas.scale(escala, escala);
+        canvas.drawText(texto, 0, 300/escala, paint);
+        canvas.restore();
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(10);
-        canvas.drawLine(0,300,width,300,paint);
+        float ascent = paint.getFontMetrics().ascent;
+        float descent = paint.getFontMetrics().descent;
+        canvas.drawLine(0, 300, width, 300, paint);
+        paint.setColor(Color.YELLOW);
+        canvas.drawLine(0, 300 + ascent, width, 300 + ascent, paint);
+        paint.setColor(Color.CYAN);
+        canvas.drawLine(0, 300 + descent, width, 300 + descent, paint);
     }
 
     private void pintar() {

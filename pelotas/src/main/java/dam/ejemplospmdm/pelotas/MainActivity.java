@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         surface.getHolder().addCallback(this);
         setContentView(surface);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "orange.ttf");
-        juego = new Juego(typeface);
+        juego = new Juego(getResources().getDisplayMetrics(),typeface);
         surface.setOnTouchListener(juego);
     }
 
